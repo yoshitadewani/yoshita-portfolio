@@ -31,15 +31,17 @@ jobs:
           version: 9
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
+        working-directory: "./final website-redesign"
 
       - name: Build with Next.js
         run: pnpm run build
+        working-directory: "./final website-redesign"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: "./final website-redesign/out"
 
   deploy:
     environment:
