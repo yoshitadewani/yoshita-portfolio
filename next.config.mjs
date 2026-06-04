@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // <-- Yeh line Next.js ko static HTML banane par majboor karegi
+  output: 'export',
+  basePath: '/yoshita-portfolio',
   images: {
-    unoptimized: true, // Static export ke liye images optimize off karni padti hai
+    unoptimized: true,
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
