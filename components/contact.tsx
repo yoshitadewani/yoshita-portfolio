@@ -13,10 +13,28 @@ export function Contact() {
     message: '',
   })
   const [focusedField, setFocusedField] = useState<string | null>(null)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
+    setStatus('sending')
+
+    try {
+      const res = await fetch('https://formspree.io/f/mwvjkapw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (res.ok) {
+        setStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   const socialLinks = [
@@ -79,8 +97,8 @@ export function Contact() {
             <p className="text-sm font-medium text-[#4A8CFF] tracking-[0.2em] uppercase mb-4">
               Get in Touch
             </p>
-            
-            <motion.h2 
+
+            <motion.h2
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0A1E30] leading-tight mb-8"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -96,7 +114,7 @@ export function Contact() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-lg text-[#5E7896] leading-relaxed mb-12"
             >
-              Have a project in mind? {"I'd"} love to hear about it. {"Let's"} discuss how we can 
+              Have a project in mind? {"I'd"} love to hear about it. {"Let's"} discuss how we can
               bring your vision to life with compelling design.
             </motion.p>
 
@@ -133,85 +151,136 @@ export function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Name Field */}
-              <div className="relative">
-                <label 
-                  className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                    focusedField === 'name' || formData.name 
-                      ? 'text-xs text-[#4A8CFF] -top-6' 
-                      : 'text-base text-[#5E7896] top-3'
-                  }`}
-                >
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  onFocus={() => setFocusedField('name')}
-                  onBlur={() => setFocusedField(null)}
-                  className="w-full bg-transparent border-b-2 border-[#D9EAFF] focus:border-[#4A8CFF] py-3 text-[#0A1E30] text-lg outline-none transition-colors duration-300"
-                />
-              </div>
-
-              {/* Email Field */}
-              <div className="relative">
-                <label 
-                  className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                    focusedField === 'email' || formData.email 
-                      ? 'text-xs text-[#4A8CFF] -top-6' 
-                      : 'text-base text-[#5E7896] top-3'
-                  }`}
-                >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  onFocus={() => setFocusedField('email')}
-                  onBlur={() => setFocusedField(null)}
-                  className="w-full bg-transparent border-b-2 border-[#D9EAFF] focus:border-[#4A8CFF] py-3 text-[#0A1E30] text-lg outline-none transition-colors duration-300"
-                />
-              </div>
-
-              {/* Message Field */}
-              <div className="relative">
-                <label 
-                  className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                    focusedField === 'message' || formData.message 
-                      ? 'text-xs text-[#4A8CFF] -top-6' 
-                      : 'text-base text-[#5E7896] top-3'
-                  }`}
-                >
-                  Tell me about your project
-                </label>
-                <textarea
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  onFocus={() => setFocusedField('message')}
-                  onBlur={() => setFocusedField(null)}
-                  rows={4}
-                  className="w-full bg-transparent border-b-2 border-[#D9EAFF] focus:border-[#4A8CFF] py-3 text-[#0A1E30] text-lg outline-none transition-colors duration-300 resize-none"
-                />
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-4">
-                <MagneticButton
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 bg-[#0A1E30] text-white text-base font-medium rounded-full hover:bg-[#173654] transition-all duration-300 shadow-lg shadow-[#0A1E30]/20"
-                >
-                  Send Message
-                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            {status === 'success' ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center justify-center h-full min-h-[400px] text-center gap-6 p-10 rounded-2xl bg-white/50 backdrop-blur-sm border border-white/60"
+              >
+                <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                </MagneticButton>
-              </div>
-            </form>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-[#0A1E30] mb-2">Message Sent! 🎉</h3>
+                  <p className="text-[#5E7896]">Thank you for reaching out. I'll get back to you soon!</p>
+                </div>
+                <button
+                  onClick={() => setStatus('idle')}
+                  className="text-sm text-[#4A8CFF] underline underline-offset-4 hover:text-[#0A1E30] transition-colors"
+                >
+                  Send another message
+                </button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Name Field */}
+                <div className="relative">
+                  <label
+                    className={`absolute left-0 transition-all duration-300 pointer-events-none ${
+                      focusedField === 'name' || formData.name
+                        ? 'text-xs text-[#4A8CFF] -top-6'
+                        : 'text-base text-[#5E7896] top-3'
+                    }`}
+                  >
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onFocus={() => setFocusedField('name')}
+                    onBlur={() => setFocusedField(null)}
+                    className="w-full bg-transparent border-b-2 border-[#D9EAFF] focus:border-[#4A8CFF] py-3 text-[#0A1E30] text-lg outline-none transition-colors duration-300"
+                  />
+                </div>
+
+                {/* Email Field */}
+                <div className="relative">
+                  <label
+                    className={`absolute left-0 transition-all duration-300 pointer-events-none ${
+                      focusedField === 'email' || formData.email
+                        ? 'text-xs text-[#4A8CFF] -top-6'
+                        : 'text-base text-[#5E7896] top-3'
+                    }`}
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onFocus={() => setFocusedField('email')}
+                    onBlur={() => setFocusedField(null)}
+                    className="w-full bg-transparent border-b-2 border-[#D9EAFF] focus:border-[#4A8CFF] py-3 text-[#0A1E30] text-lg outline-none transition-colors duration-300"
+                  />
+                </div>
+
+                {/* Message Field */}
+                <div className="relative">
+                  <label
+                    className={`absolute left-0 transition-all duration-300 pointer-events-none ${
+                      focusedField === 'message' || formData.message
+                        ? 'text-xs text-[#4A8CFF] -top-6'
+                        : 'text-base text-[#5E7896] top-3'
+                    }`}
+                  >
+                    Tell me about your project
+                  </label>
+                  <textarea
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onFocus={() => setFocusedField('message')}
+                    onBlur={() => setFocusedField(null)}
+                    rows={4}
+                    className="w-full bg-transparent border-b-2 border-[#D9EAFF] focus:border-[#4A8CFF] py-3 text-[#0A1E30] text-lg outline-none transition-colors duration-300 resize-none"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="pt-4">
+                  <MagneticButton
+                    className={`w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 bg-[#0A1E30] text-white text-base font-medium rounded-full transition-all duration-300 shadow-lg shadow-[#0A1E30]/20 ${
+                      status === 'sending'
+                        ? 'opacity-70 cursor-not-allowed'
+                        : 'hover:bg-[#173654]'
+                    }`}
+                  >
+                    {status === 'sending' ? (
+                      <>
+                        <svg className="animate-spin w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </>
+                    )}
+                  </MagneticButton>
+
+                  {status === 'error' && (
+                    <p className="mt-4 text-red-500 text-sm font-medium">
+                      ❌ Something went wrong. Please try again or email directly.
+                    </p>
+                  )}
+                </div>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>
     </section>
   )
 }
+
