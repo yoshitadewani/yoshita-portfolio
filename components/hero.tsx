@@ -73,7 +73,7 @@ export function Hero() {
           {/* Name with letter animation */}
           <div className="overflow-hidden mb-10">
             <motion.h1 
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#0A1E30] tracking-tight"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#0A1E30] tracking-tight"
               initial="hidden"
               animate="visible"
             >
