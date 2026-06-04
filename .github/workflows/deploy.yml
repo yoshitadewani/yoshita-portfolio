@@ -32,16 +32,14 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-        working-directory: "./final website-redesign"
 
       - name: Build with Next.js
         run: pnpm run build
-        working-directory: "./final website-redesign"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./final website-redesign/out"
+          path: ./out
 
   deploy:
     environment:
