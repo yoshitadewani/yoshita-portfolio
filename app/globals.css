@@ -146,3 +146,7 @@ html {
   background: var(--accent);
   color: white;
 }
+#services {
+  scroll-margin-top: 100px;
+}
+
