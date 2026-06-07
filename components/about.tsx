@@ -28,9 +28,6 @@ export function About() {
           {/* Portrait */}
           <motion.div
             id="services"
-             <div id="services-anchor" style={{ position: 'relative', top: '-100px' }} />
-  
-  <div className="text-center mb-16">
             initial={{ opacity: 0, x: -60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
