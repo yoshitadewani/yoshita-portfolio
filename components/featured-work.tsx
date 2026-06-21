@@ -33,13 +33,6 @@ const projects = {
       size: 'medium',
     },
     {
-      id: 4,
-      title: 'Sale Campaign',
-      category: 'Fashion Branding',
-      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fashion-brand-4-k3J5T3aTvVVCbUjdsj428j51IysZHZ.png',
-      size: 'large',
-    },
-    {
       id: 5,
       title: 'Big Sale',
       category: 'Fashion Branding',
