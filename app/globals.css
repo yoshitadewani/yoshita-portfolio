@@ -1,152 +1,342 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
-  --background: #F8FBFF;
-  --background-soft: #EAF4FF;
-  --background-accent: #D9EAFF;
-  
-  --navy: #0A1E30;
-  --navy-soft: #173654;
-  
-  --accent: #4A8CFF;
-  --accent-soft: #DCEBFF;
-  
-  --text: #0A1E30;
-  --text-light: #5E7896;
-  
-  --foreground: #0A1E30;
-  --card: #ffffff;
-  --card-foreground: #0A1E30;
-  --popover: #ffffff;
-  --popover-foreground: #0A1E30;
-  --primary: #0A1E30;
-  --primary-foreground: #F8FBFF;
-  --secondary: #EAF4FF;
-  --secondary-foreground: #0A1E30;
-  --muted: #EAF4FF;
-  --muted-foreground: #5E7896;
-  --border: #D9EAFF;
-  --input: #D9EAFF;
-  --ring: #4A8CFF;
-  --radius: 0.625rem;
+  --background: #faf8f3;
+  --foreground: #1a1714;
+  --accent: #c9863e;
+  --accent-alt: #1e3a5f;
+  --border: #e8e3db;
+  --muted: #d4cec5;
+  --muted-foreground: #6b6560;
 }
 
 @theme inline {
-  --font-sans: 'Plus Jakarta Sans', 'Geist', sans-serif;
-  --font-mono: 'Geist Mono', monospace;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-alt: var(--accent-alt);
+  --color-border: var(--border);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground;
-    cursor: none;
+    @apply bg-background text-foreground antialiased;
   }
-  a, button {
-    cursor: none;
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Container and layout */
+.container {
+  @apply max-w-6xl mx-auto px-6 md:px-8;
+}
+.section-pad {
+  padding-block: 5rem;
+}
+@media (min-width: 768px) {
+  .section-pad {
+    padding-block: 8rem;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: var(--background-soft);
+/* Navigation */
+.site-nav {
+  @apply sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border;
+}
+.nav-inner {
+  @apply h-16 md:h-20 flex items-center justify-between;
+}
+.wordmark {
+  @apply text-lg md:text-xl font-bold text-foreground hover:text-accent-alt transition-colors;
+}
+.wordmark span {
+  @apply text-accent;
+}
+.desktop-nav {
+  @apply hidden md:flex gap-8 items-center;
+}
+.desktop-nav a {
+  @apply text-sm text-muted-foreground hover:text-foreground transition-colors;
+}
+.nav-cta {
+  @apply px-5 py-2 bg-foreground text-background rounded-full text-sm font-medium hover:bg-accent-alt transition-colors;
+}
+.mobile-menu-button {
+  @apply md:hidden p-2 text-foreground;
+}
+.mobile-nav {
+  @apply md:hidden border-t border-border bg-background flex flex-col gap-4 p-6;
+}
+.mobile-nav a {
+  @apply text-sm font-medium text-foreground hover:text-accent-alt transition-colors;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 4px;
+/* Hero */
+.hero-section {
+  padding-block: 5rem;
+}
+@media (min-width: 768px) {
+  .hero-section {
+    padding-block: 8rem;
+  }
+}
+.hero-grid {
+  @apply grid md:grid-cols-2 gap-12 md:gap-16 items-center;
+}
+.eyebrow {
+  @apply text-xs uppercase tracking-widest text-muted-foreground font-semibold block mb-6;
+}
+.hero-copy h1 {
+  @apply text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight;
+}
+.hero-copy h1 em {
+  @apply italic text-accent-alt font-normal;
+}
+.hero-lede {
+  @apply text-lg text-muted-foreground mb-8 leading-relaxed;
+}
+.hero-actions {
+  @apply flex flex-col sm:flex-row gap-4 items-start;
+}
+.button {
+  @apply px-6 py-3 font-medium rounded-lg transition-all inline-flex items-center gap-2;
+}
+.button-dark {
+  @apply bg-foreground text-background hover:bg-accent-alt;
+}
+.button-light {
+  @apply bg-accent text-background hover:bg-accent-alt;
+}
+.text-link {
+  @apply text-muted-foreground hover:text-accent-alt underline underline-offset-4 transition-colors text-sm;
+}
+.hero-art {
+  @apply relative;
+}
+.hero-frame {
+  @apply rounded-xl overflow-hidden bg-muted border border-border;
+}
+.hero-frame img {
+  @apply w-full h-auto block;
+}
+.hero-note {
+  @apply absolute bottom-4 right-4 text-xs bg-background/90 backdrop-blur px-3 py-2 rounded-lg border border-border flex gap-2 items-center;
+}
+.hero-footer {
+  @apply flex justify-between items-center text-xs text-muted-foreground mt-12 pt-6 border-t border-border;
+}
+.scroll-mark {
+  @apply hidden md:block;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--navy-soft);
+/* Featured work section */
+.work-section {
+  padding-block: 5rem;
+  background: color-mix(in srgb, white 30%, transparent);
+
+}
+.section-heading {
+  @apply grid md:grid-cols-2 gap-12 mb-12;
+}
+.section-heading h2 {
+  @apply text-4xl md:text-5xl font-bold text-foreground leading-tight;
+}
+.section-heading h2 em {
+  @apply italic text-accent-alt font-normal;
+}
+.section-intro {
+  @apply text-lg text-muted-foreground leading-relaxed;
+}
+.filter-row {
+  @apply flex flex-wrap gap-3 mb-12;
+}
+.filter-button {
+  @apply px-4 py-2 text-sm font-medium rounded-full border border-border text-muted-foreground hover:border-foreground hover:text-foreground transition-all;
+}
+.filter-button.active {
+  @apply bg-foreground text-background border-foreground;
+}
+.project-grid {
+  @apply grid md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+.project-card {
+  @apply rounded-lg overflow-hidden border border-border hover:border-accent-alt cursor-pointer transition-all;
+}
+.project-card-1 {
+  @apply md:col-span-2;
+}
+.project-image {
+  @apply block overflow-hidden bg-muted aspect-video;
+}
+.project-image img {
+  @apply w-full h-full object-cover transition-transform duration-300;
+}
+.project-card:hover .project-image img {
+  transform: scale(1.05);
+}
+.project-meta {
+  @apply p-4 flex flex-col gap-2;
+}
+.project-meta strong {
+  @apply text-foreground font-bold;
+}
+.project-meta small {
+  @apply text-muted-foreground text-sm;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Project dialog */
+.project-dialog {
+  @apply fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-6;
 }
-
-/* Grain texture overlay */
-.grain-overlay {
+.dialog-panel {
+  @apply bg-background rounded-xl border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto;
+}
+.dialog-close {
+  @apply absolute top-4 right-4 p-2 hover:bg-muted rounded-lg transition-colors;
+}
+.project-dialog .dialog-close {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+.dialog-copy {
+  @apply p-8 border-b border-border;
+}
+.dialog-copy h2 {
+  @apply text-3xl font-bold text-foreground mb-4;
+}
+.dialog-client {
+  @apply text-sm text-muted-foreground mt-4 block;
+}
+.dialog-images {
+  @apply flex flex-col;
+}
+.dialog-images img {
+  @apply w-full h-auto;
 }
 
-/* Glass effect */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+/* About section */
+.about-section {
+  padding-block: 5rem;
+}
+.about-grid {
+  @apply grid md:grid-cols-2 gap-12 md:gap-16 items-center mb-16;
+}
+.about-copy {
+  @apply space-y-6 text-lg text-muted-foreground leading-relaxed;
 }
 
-.glass-strong {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+/* Services */
+.services-block {
+  @apply mb-16;
+}
+.services-block > div:first-child {
+  @apply mb-8;
+}
+.services-block h3 {
+  @apply text-3xl md:text-4xl font-bold text-foreground;
+}
+.service-list {
+  @apply grid md:grid-cols-2 gap-6;
+}
+.service-item {
+  @apply p-6 rounded-lg border border-border bg-white/50 hover:bg-white transition-all;
+}
+.service-item strong {
+  @apply block text-foreground font-bold mb-2;
+}
+.service-item span {
+  @apply text-sm text-muted-foreground leading-relaxed;
 }
 
-/* Text reveal animation */
-@keyframes textReveal {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+/* Process */
+.process-block {
+  @apply mb-16;
+}
+.process-block > div:first-child {
+  @apply mb-8;
+}
+.process-block h3 {
+  @apply text-3xl md:text-4xl font-bold text-foreground;
+}
+.process-list {
+  @apply grid md:grid-cols-2 gap-8;
+}
+.process-item {
+  @apply flex gap-4;
+}
+.process-item > span {
+  @apply text-3xl font-bold text-accent min-w-fit;
+}
+.process-item > div strong {
+  @apply block text-foreground font-bold mb-2;
+}
+.process-item > div p {
+  @apply text-muted-foreground text-sm leading-relaxed;
+}
+
+/* Contact section */
+.contact-section {
+  padding-block: 5rem;
+  background: color-mix(in srgb, white 30%, transparent);
+}
+@media (min-width: 768px) {
+  .work-section,
+  .about-section,
+  .contact-section {
+    padding-block: 8rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
-.text-reveal {
-  animation: textReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.contact-heading {
+  @apply text-center mb-12 md:mb-16;
+}
+.contact-heading h2 {
+  @apply text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4;
+}
+.contact-heading h2 em {
+  @apply italic text-accent-alt font-normal;
+}
+.contact-heading > p {
+  @apply text-lg text-muted-foreground;
+}
+.contact-layout {
+  @apply grid md:grid-cols-2 gap-12 md:gap-16;
+}
+.contact-links {
+  @apply flex flex-col gap-4;
+}
+.contact-links a {
+  @apply px-6 py-3 border border-border rounded-lg hover:border-accent-alt hover:bg-white/50 transition-all inline-flex gap-2 items-center;
+}
+.contact-form {
+  @apply space-y-6;
+}
+.contact-form label {
+  @apply block text-sm font-medium text-foreground mb-2;
+}
+.contact-form input,
+.contact-form textarea {
+  @apply w-full px-4 py-2 border border-border rounded-lg focus:border-accent-alt focus:outline-none transition-colors bg-white/50;
 }
 
-/* Selection */
-::selection {
-  background: var(--accent);
-  color: white;
+/* Footer */
+footer {
+  @apply border-t border-border py-8 text-center text-sm text-muted-foreground;
 }
-#services {
-  scroll-margin-top: 100px;
-}
-
