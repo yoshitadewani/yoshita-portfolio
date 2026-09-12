@@ -7,8 +7,10 @@ import Image from 'next/image'
 const categories = [
   { id: 'fashion', name: 'Fashion Branding' },
   { id: 'poster', name: 'Poster Design' },
-  { id: 'presentation', name: 'Presentation Design' },
+  { id: 'carousel', name: 'Carousel' },
 ]
+
+type CategoryId = 'fashion' | 'poster' | 'carousel'
 
 type PortfolioProject = {
   id: number
@@ -19,7 +21,7 @@ type PortfolioProject = {
   size: string
 }
 
-const projects: Record<'fashion' | 'poster' | 'presentation', PortfolioProject[]> = {
+const projects: Record<CategoryId, PortfolioProject[]> = {
   fashion: [
     {
       id: 1,
@@ -79,40 +81,25 @@ const projects: Record<'fashion' | 'poster' | 'presentation', PortfolioProject[]
       image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/poster-hiring-yhlDMZKy5ecIV5g7m5B67PMzn7lMzq.png',
       size: 'medium',
     },
+    {
+      id: 15,
+      title: 'Big Sale',
+      category: 'Fashion Poster',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/15-96y59WYjcqEkrZ4H6SNOJW0gR3c5qf.png',
+      size: 'large',
+    },
   ],
-  presentation: [
+  carousel: [
     {
       id: 10,
-      title: 'Groww',
-      category: 'Presentation Design',
-      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-vUcwnKy8jiw9SjuNc4rzdCadP2ktry.png',
+      title: 'Carousel Stories',
+      category: 'Carousel',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/10-bmoxzw2zNqq4ecJ9EJS8Bze2HSiFgw.png',
       images: [
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-vUcwnKy8jiw9SjuNc4rzdCadP2ktry.png',
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-ttzTRITSn1xyZco37pTvJLgHxMlLrv.png',
-      ],
-      size: 'large',
-    },
-    {
-      id: 11,
-      title: 'Agentathon',
-      category: 'Presentation Design',
-      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/7-15PoRrEmjTSHposyUYUbzbtvNZrFfv.png',
-      images: [
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/7-15PoRrEmjTSHposyUYUbzbtvNZrFfv.png',
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/9-P6Q2rgSpQBNZ4OZr2uDwi8r3fVIT3g.png',
-      ],
-      size: 'large',
-    },
-    {
-      id: 12,
-      title: 'Skyroot Aerospace',
-      category: 'Presentation Design',
-      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-2Eby647QkR4Sp2HIKLoR1OuzMRc40P.png',
-      images: [
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-2Eby647QkR4Sp2HIKLoR1OuzMRc40P.png',
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-ttzTRITSn1xyZco37pTvJLgHxMlLrv.png',
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/10-bmoxzw2zNqq4ecJ9EJS8Bze2HSiFgw.png',
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-K5l3EbZsX8oqXh8e8QlaCwpiEeJLNf.png',
+        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/9-P6Q2rgSpQBNZ4OZr2uDwi8r3fVIT3g.png',
+        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/13-BnQqHO3R17FgqpfnnqjNqatn3QkfB6.png',
+        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/16-qxCP3kUAMEZhhIiVUjrNMXH5MWWu5N.png',
       ],
       size: 'large',
     },
@@ -120,7 +107,7 @@ const projects: Record<'fashion' | 'poster' | 'presentation', PortfolioProject[]
 }
 
 // Get all projects and related slides for lightbox navigation
-const allProjects = [...projects.fashion, ...projects.poster, ...projects.presentation].flatMap((project) =>
+const allProjects = [...projects.fashion, ...projects.poster, ...projects.carousel].flatMap((project) =>
   Array.isArray(project.images)
     ? project.images.map((image, index) => ({ ...project, image, title: `${project.title} ${index + 1}` }))
     : [project],
@@ -133,7 +120,7 @@ export function FeaturedWork() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-  const currentProjects = projects[activeCategory as keyof typeof projects]
+  const currentProjects = projects[activeCategory as CategoryId]
 
   const openLightbox = useCallback((projectId: number) => {
     const index = allProjects.findIndex(p => p.id === projectId)
