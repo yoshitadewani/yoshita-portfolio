@@ -91,13 +91,22 @@ const projects: Record<CategoryId, PortfolioProject[]> = {
   ],
   carousel: [
     {
-      id: 1,
-      title: 'Groww',
+      id: 11,
+      title: 'Grow',
       category: 'Carousel',
       image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-LvnUozV9GSJQbhi8nUF9MoZhoyu2xM.png',
       images: [
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-LvnUozV9GSJQbhi8nUF9MoZhoyu2xM.png',
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-nWghsCJ4oMiYGI2KJ6JlEHT5HlQ6r5.png',
+      ],
+      size: 'large',
+    },
+    {
+      id: 12,
+      title: 'Skyroot',
+      category: 'Carousel',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-uPKHWSGOQAN31JczNWjLD6JYNM93aq.png',
+      images: [
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-uPKHWSGOQAN31JczNWjLD6JYNM93aq.png',
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-BK9cOJFjRRio9KzWrzkcdM1woHvzp1.png',
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-nlrbw4apCU0BYBZDgM6b7bkvRrHpIy.png',
@@ -110,7 +119,7 @@ const projects: Record<CategoryId, PortfolioProject[]> = {
 // Get all projects and related slides for lightbox navigation
 const allProjects = [...projects.fashion, ...projects.poster, ...projects.carousel].flatMap((project) =>
   Array.isArray(project.images)
-    ? project.images.map((image, index) => ({ ...project, image, title: `${project.title} ${index + 1}` }))
+    ? project.images.map((image) => ({ ...project, image }))
     : [project],
 )
 
@@ -282,7 +291,8 @@ export function FeaturedWork() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ delay: 0.15 }}
               onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-              className="absolute left-4 md:left-8 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300"
+              type="button"
+              className="absolute left-4 md:left-8 z-20 w-14 h-14 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/35 text-white cursor-pointer transition-all duration-300 shadow-lg"
               aria-label="Previous image"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -296,7 +306,8 @@ export function FeaturedWork() {
               exit={{ opacity: 0, x: 20 }}
               transition={{ delay: 0.15 }}
               onClick={(e) => { e.stopPropagation(); goToNext(); }}
-              className="absolute right-4 md:right-8 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300"
+              type="button"
+              className="absolute right-4 md:right-8 z-20 w-14 h-14 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/35 text-white cursor-pointer transition-all duration-300 shadow-lg"
               aria-label="Next image"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
