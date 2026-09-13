@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/yoshita-portfolio',
+  basePath: process.env.GITHUB_ACTIONS ? '/yoshita-portfolio' : '',
   trailingSlash: true,
   images: {
     unoptimized: true,
