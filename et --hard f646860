@@ -1,0 +1,40 @@
+[33mfb7b7c6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update portfolio with new design
+[33mf646860[m Merge pull request #1 from yoshitadewani/v0/fix-preview-routing
+[33m213a338[m Redesign portfolio as editorial work showcase
+[33m5554ea9[m Fix preview root routing and asset paths
+[33m8ccc486[m Remove 'Sale Campaign' from featured works
+[33mb5ba82a[m Update about.tsx
+[33mb9e9d6b[m Update globals.css
+[33medc8ed6[m Update about.tsx
+[33m074f8fd[m Update globals.css
+[33m9daea09[m Add services anchor div for layout adjustment
+[33mde7a5de[m Update about.tsx
+[33mf8c18ce[m Update contact.tsx
+[33mf28decf[m Adjust font size for hero component heading
+[33m4692b2c[m Delete styles.css
+[33m0920f8b[m Delete script.js
+[33ma475590[m Delete index.html
+[33m5cde057[m Add utility function 'cn' for class name merging
+[33mfcf67a2[m Update deploy.yml
+[33m48e552c[m Update next.config.mjs
+[33m0eb0a67[m update hero.tsx
+[33m06241a8[m Update hero.tsx
+[33m8b01729[m Add files via upload
+[33md649f54[m Fix Tailwind CSS import syntax in globals.css
+[33m14f97e2[m Add files via upload
+[33mcd79b68[m Add initial content to page.tsx
+[33m3d6d8d8[m Update deployment workflow for Next.js build output
+[33m415a5b7[m Update deploy workflow for directory and install options
+[33mfb5318d[m Delete pnpm-workspace.yaml
+[33m7eff554[m deploy.yml
+[33mbcccc5b[m Add files via upload
+[33m9fe1e93[m deploy.yml
+[33m10fa85d[m deploy.yml
+[33m564fe0a[m deploy.yml
+[33mb413000[m deploy.yml
+[33mec17c9c[m deploy.yml
+[33m699c4b6[m Update deployment workflow with new working directory
+[33m86636f8[m Update deploy.yml
+[33md974547[m Create deploy.yml
+[33m12444dd[m Add files via upload
+[33m7afb0aa[m Initial portfolio backup
